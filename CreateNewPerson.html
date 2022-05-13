@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Person</title>
+    <!-- 引入vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    
+</head>
+<body>
+    <div id="app">
+        <!-- 这里的输入框绑定了newPerson变量 根据mvvm特性 dom改变则data也会改变所以newPerson的值是最新的输入值 -->
+        name:<input type="text" v-model="newPerson.name">
+        age:<input type="text" v-model="newPerson.age">
+        sex:
+        <select  v-model="newPerson.sex">
+            <option value="">select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <!-- 所以这里调用add方法的时候可以直接把newPerson加进people变量里面 根据mvvm特性 data改变dom也会更新 -->
+        <el-button type="primary" @click="add">Create</el-button>
+        <!-- <button >Create</button> -->
+        <table>
+            <tr>
+                <th>name</th>
+                <th>age</th>
+                <th>sex</th>
+                <th>operate</th>
+            </tr>
+            <tr v-for="person in people">
+                <td>{{person.name}}</td>
+                <td>{{person.age}}</td>
+                <td>{{person.sex}}</td>
+                <td><button @click="del(this)">delete</button></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                msg:"hello",
+                newPerson:{
+                    name:"",
+                    age:"",
+                    sex:""
+                },
+                people:[{
+                    name:"许汝桦",
+                    age:20,
+                    sex:"Mele"
+                },]
+            },
+            methods:{
+                add(){
+                    for(var newperson in this.newPerson){
+                        console.log(this.newPerson[newperson])
+                        if(this.newPerson[newperson] == ""){
+                            alert("请不要留空");
+                            return false;
+                        }
+                    }
+                    //把newPerson放进people变量
+                    this.people.push(this.newPerson);
+                    //把newPerson值清空 防止数据重复
+                    this.newPerson = {name:"",age:"",sex:"Mele"}
+                },
+                del(obj){
+                    // 删除当前值
+                    this.people.splice(obj,1);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

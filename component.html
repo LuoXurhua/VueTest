@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <father-conponent title="props向子组件传值">
+            
+        </father-conponent>
+    </div>
+    <script>
+        // 创建子组件构造器
+        var childConponent = Vue.extend({
+            template:"<p>这是子组件</p>"
+        })
+        // 直接用注册语法糖注册父组件，并且使用components属性注册子组件
+        Vue.component("father-conponent", {
+            props:['title'],
+            template:"<div>{{title}}<child-conponent></child-conponent></div>",
+            components:{
+                "child-conponent":childConponent
+            }
+        });
+        var app = new Vue({
+            el:'#app',
+            data:{
+                title:"props向子组件传值"
+            },
+        })
+    </script>
+</body>
+</html>
